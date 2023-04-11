@@ -3,14 +3,16 @@ import {Container, CssBaseline} from "@mui/material";
 import {Routes} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
 import {selectCategories} from "./features/games/gamesSlice";
-import {fetchCategories} from "./features/games/gamesThunks";
+import {fetchCategories, fetchCluesByCategory} from "./features/games/gamesThunks";
 
 function App() {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategories);
 
   useEffect( () => {
-    void dispatch(fetchCategories())
+    void dispatch(fetchCategories());
+    void dispatch( fetchCluesByCategory(150))
+
   }, [dispatch]);
 
   console.log(categories);
