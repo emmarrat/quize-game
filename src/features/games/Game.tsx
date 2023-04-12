@@ -29,11 +29,14 @@ const Game = () => {
             justifyContent="center"
             alignItems="center"
             border="0.5px solid black"
-            sx={{width: '100px', maxWidth: '100px', height: '100px'}}
+            sx={{width: '120px', maxWidth: '120px', height: '120px', background: '#1976d2'}}
           >
             <Typography
               variant="body1"
               align="center"
+              textTransform="capitalize"
+              color="#fff"
+              fontWeight={600}
             >
               {clueRow.title}
             </Typography>

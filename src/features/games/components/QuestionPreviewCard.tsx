@@ -68,12 +68,20 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
         alignItems="center"
         key={clue.id}
         border="0.5px solid black"
-        sx={{cursor: 'pointer', width: '100px', maxWidth: '100px', height: '100px'}}
+        sx={{
+          cursor: 'pointer',
+          width: '120px',
+          maxWidth: '120px',
+          height: '120px',
+          backgroundColor: clue.isAnswered ? '#e8ebe8' : '#06b115'
+        }}
         onClick={handleClickOpen}
       >
         <Typography
           variant="subtitle1"
           align="center"
+          color="#fff"
+          fontWeight={600}
         >
           {clue.isAnswered ? '' : clue.value}
         </Typography>
