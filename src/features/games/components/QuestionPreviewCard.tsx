@@ -1,33 +1,61 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Grid, Typography} from "@mui/material";
 import {Clue} from "../../../types";
 import QuestionCard from "./QuestionCard";
+import {useAppDispatch} from "../../../app/hooks";
+import {markAnswered} from "../gamesSlice";
 
 interface Props {
   clue: Clue;
 }
 
 const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
+  const dispatch = useAppDispatch();
+
   const [open, setOpen] = React.useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | string>('');
+  const [seconds, setSeconds] = React.useState(60);
+  const [timerActive, setTimerActive] = React.useState(false);
 
+  useEffect(() => {
+      let intervalId: NodeJS.Timeout;
 
-  const handleClickOpen = () => {
-    if(!clue.isAnswered) {
-      setOpen(true);
-    }
-  };
+      if (seconds > 0 && timerActive) {
+        intervalId = setTimeout(() => {
+          setSeconds(seconds - 1);
+        }, 1000);
+      } else if (seconds === 0 && timerActive) {
+        dispatch(markAnswered(clue.id));
+        setIsCorrect(false);
+        setTimerActive(false);
+      }
+
+      return () => {
+        clearTimeout(intervalId);
+      };
+    },
+    [clue.id, dispatch, seconds, timerActive]);
 
   const handleClose = () => {
     setOpen(false);
+    setTimerActive(false);
+  };
+
+  const handleClickOpen = () => {
+    if (!clue.isAnswered) {
+      setOpen(true);
+      setTimerActive(true);
+    }
   };
 
   const setTrueAnswer = () => {
     setIsCorrect(true);
+    setTimerActive(false);
   };
 
   const setFalseAnswer = () => {
     setIsCorrect(false);
+    setTimerActive(false);
   };
 
 
@@ -57,6 +85,7 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
         isCorrect={isCorrect}
         trueAnswer={setTrueAnswer}
         falseAnswer={setFalseAnswer}
+        seconds={seconds}
       />
     </>
   );

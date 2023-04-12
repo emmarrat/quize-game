@@ -11,9 +11,10 @@ export interface Props {
   isCorrect: boolean | string;
   trueAnswer: () => void;
   falseAnswer: () => void;
+  seconds: number
 }
 
-const QuestionCard:React.FC<Props> = ({open, handleClose, clue, isCorrect, trueAnswer, falseAnswer}) => {
+const QuestionCard:React.FC<Props> = ({open, handleClose, clue, isCorrect, trueAnswer, falseAnswer, seconds}) => {
   const dispatch = useAppDispatch();
 
   const [question, setQuestion] = useState({
@@ -50,6 +51,8 @@ const QuestionCard:React.FC<Props> = ({open, handleClose, clue, isCorrect, trueA
       >
         <DialogContent sx={{padding: '10px'}}>
           <Typography variant="body1" textAlign="center" my={3}>{clue.question}</Typography>
+          <Typography variant="subtitle1" textAlign="center" my={3}>left: {seconds}</Typography>
+
           {isCorrect && <Typography variant="h5" textAlign="center" fontWeight={700} textTransform="uppercase" sx={{color: "green"}}>Correct!</Typography>}
           {isCorrect === false && <Typography variant="h5" textAlign="center" fontWeight={700} textTransform="uppercase" sx={{color: "red"}}>Not Correct :(</Typography>}
           <form
