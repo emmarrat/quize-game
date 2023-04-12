@@ -1,30 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Grid, TextField, Typography} from "@mui/material";
-import {useAppDispatch, useAppSelector} from "../../../app/hooks";
+import {useAppDispatch} from "../../../app/hooks";
 import {useNavigate} from "react-router-dom";
 import {login} from "../../../features/users/usersSlice";
-import {fetchCategories, fetchCluesByCategories} from "../../../features/games/gamesThunks";
-import {selectCategories} from "../../../features/games/gamesSlice";
+import {fetchCluesArray} from "../../../features/games/gamesThunks";
 
 const WelcomeForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const categories = useAppSelector(selectCategories);
 
   const [name, setName] = useState({
     name: '',
   });
 
   useEffect(() => {
-    dispatch(fetchCategories());
+      dispatch(fetchCluesArray());
   }, [dispatch]);
-
-  useEffect(() => {
-    if(categories.length) {
-      const categoryIds = categories.map((category) => category.id);
-      dispatch(fetchCluesByCategories(categoryIds));
-    }
-  }, [dispatch, categories]);
 
   const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -6,15 +6,15 @@ import storage from 'redux-persist/lib/storage';
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from 'redux-persist/es/constants';
 import {gamesReducer} from "../features/games/gamesSlice";
 
-const usersPersistConfig = {
+const persistConfig = {
   key: 'game:users',
   storage,
   whitelist: ['user', 'clues']
 }
 
 const rootReducer = combineReducers({
-  users: persistReducer(usersPersistConfig,usersReducer),
-  games: persistReducer(usersPersistConfig, gamesReducer),
+  users: persistReducer(persistConfig,usersReducer),
+  games: persistReducer(persistConfig, gamesReducer),
 });
 
 export const store = configureStore({

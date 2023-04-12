@@ -1,37 +1,30 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {Category, Clue, ClueData} from "../../types";
+import {ClueCategory} from "../../types";
 import axiosApi from "../../axiosApi";
+import {CATEGORY_ID} from "../../constants";
 
-export const fetchCategories = createAsyncThunk<Category[]>(
-  'games/fetchCategories',
+export const fetchCluesArray = createAsyncThunk<ClueCategory[], void>(
+  'games/fetchCluesWithCategory',
   async () => {
-    const response = await axiosApi.get<Category[]>('categories?count=5');
-    return response.data;
-  }
-);
-export const fetchCluesByCategories = createAsyncThunk<Clue[][], number[]>(
-  'games/fetchCluesByCategories',
-  async (categoryIds) => {
-    const promises = categoryIds.map(categoryId =>
-      axiosApi.get<ClueData[]>(`clues?category=${categoryId}`)
-        .then(response => response.data)
+    const promises = CATEGORY_ID.map((categoryId) =>
+      axiosApi.get<ClueCategory>(`category?id=${categoryId}`).then((response) => response.data)
     );
-
-    const responses = await Promise.all(promises);
-
-    const cluesByCategories: Clue[][] = responses.map(clueData => {
-      return clueData
-        .map((res) => ({
-          id: res.id,
-          category: res.category.title,
-          question: res.question,
-          answer: res.answer,
-          value: res.value,
-        }))
-        .slice(0, 5);
+    const response =  await Promise.all(promises);
+    return response.map((res) => {
+      return {
+        ...res,
+        clues: res.clues
+          .filter(clue => clue.value !== null)
+          .sort((a, b) => a.value - b.value) // Sort the array by the value property
+          .filter((clue, index, array) => {  // Filter the array to include only one object with each value
+            if (index === 0) {
+              return true;  // Always include the first object
+            }
+            return clue.value !== array[index - 1].value; // Only include objects with a new value
+          })
+          .slice(0, 5)
+      }
     });
-
-    return cluesByCategories;
   }
 );
 

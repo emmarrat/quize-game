@@ -12,6 +12,16 @@ export interface Clue {
   value: number;
 }
 
+export interface ClueCategory {
+  id: number;
+  title: string;
+  clues: Clue[];
+}
+
+export interface ClueCategoryData extends ClueCategory{
+  clues_count: number;
+  clues: ClueData[];
+}
 export interface ClueData extends Clue {
   category: Category;
 }

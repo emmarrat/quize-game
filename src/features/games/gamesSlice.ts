@@ -1,17 +1,15 @@
-import {Category, Clue} from "../../types";
+import {ClueCategory} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchCategories, fetchCluesByCategories} from "./gamesThunks";
+import {fetchCluesArray} from "./gamesThunks";
 import {RootState} from "../../app/store";
 
 interface GamesState {
-  categories: Category[];
-  clues: Clue[][];
+  clues: ClueCategory[];
   fetchLoading: boolean;
 }
 
 const initialState: GamesState = {
-  categories: [],
-  clues: [[], [], [], [], []],
+  clues: [],
   fetchLoading: false,
 };
 
@@ -20,25 +18,16 @@ export const gamesSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: builder => {
-      builder.addCase(fetchCategories.pending, (state) => {
-        state.fetchLoading = true;
-      });
-      builder.addCase(fetchCategories.fulfilled, (state, {payload: categories}) => {
-        state.fetchLoading = false;
-        state.categories = categories;
-      });
-      builder.addCase(fetchCategories.rejected, (state) => {
-        state.fetchLoading = false;
-      });
-      builder.addCase(fetchCluesByCategories.pending, (state) => {
+
+      builder.addCase(fetchCluesArray.pending, (state) => {
         state.clues = []
         state.fetchLoading = true;
       });
-      builder.addCase(fetchCluesByCategories.fulfilled, (state, {payload: clues}) => {
+      builder.addCase(fetchCluesArray.fulfilled, (state, {payload: clues}) => {
         state.fetchLoading = false;
         state.clues = clues;
       });
-      builder.addCase(fetchCluesByCategories.rejected, (state) => {
+      builder.addCase(fetchCluesArray.rejected, (state) => {
         state.fetchLoading = false;
       });
     }
@@ -47,7 +36,6 @@ export const gamesSlice = createSlice({
 
 export const gamesReducer = gamesSlice.reducer;
 
-export const selectCategories = (state: RootState) => state.games.categories;
 export const selectClues = (state: RootState) => state.games.clues;
 export const selectFetching = (state: RootState) => state.games.fetchLoading;
 
