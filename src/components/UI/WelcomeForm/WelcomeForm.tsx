@@ -14,7 +14,6 @@ const WelcomeForm = () => {
 
   const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(name);
     await dispatch(login(name.name));
     navigate('/');
   };
@@ -42,7 +41,7 @@ const WelcomeForm = () => {
               name="name"
               required
               sx={{width: '100%'}}
-
+              variant="outlined"
             />
           </Grid>
           <Grid item xs width="70%">

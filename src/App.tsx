@@ -1,24 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Container, CssBaseline, Typography} from "@mui/material";
 import {Route, Routes} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "./app/hooks";
-import {selectCategories} from "./features/games/gamesSlice";
-import {fetchCategories, fetchCluesByCategory} from "./features/games/gamesThunks";
 import WelcomeForm from "./components/UI/WelcomeForm/WelcomeForm";
 import Game from "./features/Game";
 
 function App() {
-  const dispatch = useAppDispatch();
-  const categories = useAppSelector(selectCategories);
-
-  useEffect( () => {
-    void dispatch(fetchCategories());
-    void dispatch( fetchCluesByCategory(150))
-
-  }, [dispatch]);
-
-  console.log(categories);
-
 
   return (
     <>

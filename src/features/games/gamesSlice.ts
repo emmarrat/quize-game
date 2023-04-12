@@ -1,18 +1,18 @@
 import {Category, Clue} from "../../types";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {fetchCategories, fetchCluesByCategory} from "./gamesThunks";
+import {fetchCategories, fetchCluesByCategories} from "./gamesThunks";
 import {RootState} from "../../app/store";
 
 interface GamesState {
   categories: Category[];
-  clues: Clue[];
+  clues: Clue[][];
   fetchLoading: boolean;
   user: string | null;
 }
 
 const initialState: GamesState = {
   categories: [],
-  clues: [],
+  clues: [[], [], [], [], []],
   fetchLoading: false,
   user: null,
 };
@@ -39,15 +39,15 @@ export const gamesSlice = createSlice({
       builder.addCase(fetchCategories.rejected, (state) => {
         state.fetchLoading = false;
       });
-      builder.addCase(fetchCluesByCategory.pending, (state) => {
+      builder.addCase(fetchCluesByCategories.pending, (state) => {
         state.clues = []
         state.fetchLoading = true;
       });
-      builder.addCase(fetchCluesByCategory.fulfilled, (state, {payload: clues}) => {
+      builder.addCase(fetchCluesByCategories.fulfilled, (state, {payload: clues}) => {
         state.fetchLoading = false;
         state.clues = clues;
       });
-      builder.addCase(fetchCluesByCategory.rejected, (state) => {
+      builder.addCase(fetchCluesByCategories.rejected, (state) => {
         state.fetchLoading = false;
       });
     }
