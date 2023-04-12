@@ -2,7 +2,9 @@ import React from 'react';
 import {Container, CssBaseline, Typography} from "@mui/material";
 import {Route, Routes} from "react-router-dom";
 import WelcomeForm from "./components/UI/WelcomeForm/WelcomeForm";
-import Game from "./features/Game";
+import Game from "./features/games/Game";
+import GamesStat from "./features/games/GamesStat";
+import AppToolbar from "./components/UI/AppToolbar/AppToolbar";
 
 function App() {
 
@@ -10,13 +12,14 @@ function App() {
     <>
       <CssBaseline/>
       <header>
-        header
+        <AppToolbar/>
       </header>
       <main>
         <Container maxWidth="xl" sx={{mt: 5}}>
           <Routes>
             <Route path="/login" element={<WelcomeForm/>}/>
             <Route path="/" element={<Game/>}/>
+            <Route path="/stats" element={<GamesStat/>}/>
             <Route
               path="*"
               element={

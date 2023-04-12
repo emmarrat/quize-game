@@ -1,28 +1,15 @@
-import React, {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "../app/hooks";
-import {
-  selectCategories,
-  selectClues,
-  selectUser,
-} from "./games/gamesSlice";
+import React from "react";
+import {useAppSelector} from "../../app/hooks";
+import {selectCategories, selectClues,} from "./gamesSlice";
 import {Navigate} from "react-router-dom";
-import {fetchCategories, fetchCluesByCategories} from "./games/gamesThunks";
 import {Grid, Typography} from "@mui/material";
+import {selectUser} from "../users/usersSlice";
 
 const Game = () => {
-  const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const categories = useAppSelector(selectCategories);
   const clues = useAppSelector(selectClues);
 
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
-
-  useEffect(() => {
-    const categoryIds = categories.map((category) => category.id);
-    dispatch(fetchCluesByCategories(categoryIds));
-  }, [dispatch, categories]);
 
   if (!user) {
     return <Navigate to="/login"/>;

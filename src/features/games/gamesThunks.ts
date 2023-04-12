@@ -20,7 +20,7 @@ export const fetchCluesByCategories = createAsyncThunk<Clue[][], number[]>(
     const responses = await Promise.all(promises);
 
     const cluesByCategories: Clue[][] = responses.map(clueData => {
-      const sortedClues = clueData
+      return clueData
         .map((res) => ({
           id: res.id,
           category: res.category.title,
@@ -29,7 +29,6 @@ export const fetchCluesByCategories = createAsyncThunk<Clue[][], number[]>(
           value: res.value,
         }))
         .slice(0, 5);
-      return sortedClues;
     });
 
     return cluesByCategories;
