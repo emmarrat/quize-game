@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {Button, Dialog, DialogContent, Grid, TextField, Typography} from "@mui/material";
 import {Clue} from "../../../types";
+import {useAppDispatch} from "../../../app/hooks";
+import {markAnswered} from "../gamesSlice";
 
 export interface Props {
   open: boolean;
@@ -12,14 +14,16 @@ export interface Props {
 }
 
 const QuestionCard:React.FC<Props> = ({open, handleClose, clue, isCorrect, trueAnswer, falseAnswer}) => {
+  const dispatch = useAppDispatch();
+
   const [question, setQuestion] = useState({
     answer: '',
   });
-  const [isAnswerGiven, setAnswerGiven] = useState(false);
+
 
   const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    await dispatch(markAnswered(clue.id))
     if(question.answer === clue.answer) {
      trueAnswer();
     } else {
@@ -28,7 +32,6 @@ const QuestionCard:React.FC<Props> = ({open, handleClose, clue, isCorrect, trueA
     setQuestion(prev =>({
       ...prev, answer: '',
     }));
-    setAnswerGiven(true);
   };
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +72,7 @@ const QuestionCard:React.FC<Props> = ({open, handleClose, clue, isCorrect, trueA
                     required
                     sx={{width: '100%'}}
                     variant="outlined"
-                    disabled={isAnswerGiven}
+                    disabled={clue.isAnswered}
                   />
                 </Grid>
                 <Grid item xs width="70%">
@@ -78,7 +81,7 @@ const QuestionCard:React.FC<Props> = ({open, handleClose, clue, isCorrect, trueA
                     variant="contained"
                     type="submit"
                     fullWidth
-                    disabled={isAnswerGiven}
+                    disabled={clue.isAnswered}
                   >
                     <span>Submit answer!</span>
                   </Button>

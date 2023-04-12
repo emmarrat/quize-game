@@ -1,10 +1,10 @@
-import {ClueCategory} from "../../types";
-import {createSlice} from "@reduxjs/toolkit";
+import {ClueCategorySorted} from "../../types";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchCluesArray} from "./gamesThunks";
 import {RootState} from "../../app/store";
 
 interface GamesState {
-  clues: ClueCategory[];
+  clues: ClueCategorySorted[];
   fetchLoading: boolean;
 }
 
@@ -16,7 +16,17 @@ const initialState: GamesState = {
 export const gamesSlice = createSlice({
     name: 'games',
     initialState,
-    reducers: {},
+    reducers: {
+      markAnswered: (state, action: PayloadAction<number>) => {
+        state.clues.forEach((clue) => {
+          clue.clues.forEach((c) => {
+            if(c.id === action.payload) {
+              c.isAnswered = true;
+            }
+          })
+        })
+      },
+    },
     extraReducers: builder => {
 
       builder.addCase(fetchCluesArray.pending, (state) => {
@@ -35,6 +45,7 @@ export const gamesSlice = createSlice({
 );
 
 export const gamesReducer = gamesSlice.reducer;
+export const {markAnswered} = gamesSlice.actions;
 
 export const selectClues = (state: RootState) => state.games.clues;
 export const selectFetching = (state: RootState) => state.games.fetchLoading;

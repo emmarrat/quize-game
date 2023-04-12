@@ -9,12 +9,13 @@ interface Props {
 
 const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
   const [open, setOpen] = React.useState(false);
-  const [isCorrect, setIsCorrect] = useState<boolean | string>('.');
-  const [isAnswered, setIsAnswered] = useState(false);
+  const [isCorrect, setIsCorrect] = useState<boolean | string>('');
 
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if(!clue.isAnswered) {
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {
@@ -23,12 +24,10 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
 
   const setTrueAnswer = () => {
     setIsCorrect(true);
-    setIsAnswered(true);
   };
 
   const setFalseAnswer = () => {
     setIsCorrect(false);
-    setIsAnswered(true);
   };
 
 
@@ -48,7 +47,7 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
           variant="subtitle1"
           align="center"
         >
-          {isAnswered ? '' : clue.value}
+          {clue.isAnswered ? '' : clue.value}
         </Typography>
       </Grid>
       <QuestionCard
