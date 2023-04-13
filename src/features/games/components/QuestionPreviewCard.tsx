@@ -14,7 +14,7 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
   const gameStatus = useAppSelector(selectGameStatus);
   const [open, setOpen] = React.useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | string>('');
-  const [seconds, setSeconds] = React.useState(10);
+  const [seconds, setSeconds] = React.useState(60);
   const [timerActive, setTimerActive] = React.useState(false);
 
   useEffect(() => {
