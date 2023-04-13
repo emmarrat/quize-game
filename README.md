@@ -10,9 +10,6 @@
 TypeScript, React, Axios, Redux-Toolkit, Redux-Persist, React-Router, Material UI, Styled-Components
 
 # To run this app:
-1. Clone this repository
-
-## For frontend:
-3.1. Install all necessary dependencies: ```npm i```
-
-3.2. Start the app: ```npm start```
+1. Clone this repository 
+2. Install all necessary dependencies: ```npm i```
+3. Start the app: ```npm start```
