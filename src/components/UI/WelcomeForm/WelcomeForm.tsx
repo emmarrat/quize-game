@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Button, Grid, TextField, Typography} from "@mui/material";
 import {useAppDispatch} from "../../../app/hooks";
 import {useNavigate} from "react-router-dom";
-import {login} from "../../../features/users/usersSlice";
 import {fetchCluesArray} from "../../../features/games/gamesThunks";
+import {login} from "../../../features/games/gamesSlice";
 
 const WelcomeForm = () => {
   const dispatch = useAppDispatch();

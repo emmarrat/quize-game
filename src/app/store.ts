@@ -1,5 +1,4 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import {usersReducer} from "../features/users/usersSlice";
 
 import {persistReducer, persistStore} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -9,11 +8,11 @@ import {gamesReducer} from "../features/games/gamesSlice";
 const persistConfig = {
   key: 'game:users',
   storage,
-  whitelist: ['user', 'clues']
+  whitelist: ['user', 'clues', 'previousUsers'],
 }
 
 const rootReducer = combineReducers({
-  users: persistReducer(persistConfig,usersReducer),
+  // users: persistReducer(persistConfig,usersReducer),
   games: persistReducer(persistConfig, gamesReducer),
 });
 

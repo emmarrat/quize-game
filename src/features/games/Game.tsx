@@ -1,9 +1,8 @@
 import React from "react";
 import {useAppSelector} from "../../app/hooks";
-import {selectClues,} from "./gamesSlice";
+import {selectClues, selectUser,} from "./gamesSlice";
 import {Navigate} from "react-router-dom";
 import {Grid, Typography} from "@mui/material";
-import {selectUser} from "../users/usersSlice";
 import QuestionPreviewCard from "./components/QuestionPreviewCard";
 
 const Game = () => {
@@ -16,6 +15,11 @@ const Game = () => {
 
   return (
     <Grid container>
+      <Grid item>
+        <Typography fontWeight={700}>
+          Your current score: <span style={{color: user.currentScore < 0 ? 'red': 'green'}}>{user.currentScore}</span>
+        </Typography>
+      </Grid>
       {clues.map((clueRow, index) => (
         <Grid
           item container

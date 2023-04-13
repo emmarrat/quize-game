@@ -22,3 +22,9 @@ export interface ClueCategorySorted extends ClueCategory{
   title: string;
   clues: Clue[];
 }
+
+export interface User {
+  name: string;
+  currentScore: number;
+  scores: number[];
+}

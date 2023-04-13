@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import {Button, Menu, MenuItem} from '@mui/material';
 import {Link as NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../../app/hooks";
-import {logout} from "../../../features/users/usersSlice";
+import {User} from "../../../types";
+import {logout} from "../../../features/games/gamesSlice";
 
 
 interface Props {
-  user: string;
+  user: User;
 }
 
 const UserMenu: React.FC<Props> = ({user}) => {
@@ -35,7 +36,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
         onClick={handleClick}
         color="inherit"
       >
-        Hello, {user}
+        Hello, {user.name}
       </Button>
       <Menu
         anchorEl={anchorEl}

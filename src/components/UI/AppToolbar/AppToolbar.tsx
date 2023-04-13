@@ -2,9 +2,9 @@ import React from 'react';
 import {AppBar, Grid, styled, Toolbar, Typography} from '@mui/material';
 import {Link as NavLink} from 'react-router-dom';
 import {useAppSelector} from "../../../app/hooks";
-import {selectUser} from "../../../features/users/usersSlice";
 import UserMenu from "./UserMenu";
 import AnonymousMenu from "./AnonymousMenu";
+import {selectUser} from "../../../features/games/gamesSlice";
 
 const Link = styled(NavLink)({
   color: 'inherit',
