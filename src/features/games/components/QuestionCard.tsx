@@ -24,8 +24,8 @@ const QuestionCard:React.FC<Props> = ({open, handleClose, clue, isCorrect, trueA
 
   const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    await dispatch(markAnswered(clue.id))
-    if(question.answer === clue.answer) {
+    await dispatch(markAnswered(clue.id));
+    if(clue.answer.toLowerCase() === question.answer.toLowerCase()) {
      trueAnswer();
     } else {
      falseAnswer();
