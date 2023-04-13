@@ -32,7 +32,10 @@ const WelcomeForm = () => {
 
   return (
     <div>
-      <Typography textAlign="center" variant="h4">Welcome! Please enter your name to play the game</Typography>
+      <Typography textAlign="center" variant="h4" lineHeight={1.5} textTransform="uppercase">
+        Welcome! <br/>
+        Please enter your name to start the game
+      </Typography>
       <form
         autoComplete="off"
         onSubmit={submitFormHandler}

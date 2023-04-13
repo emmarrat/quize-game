@@ -17,15 +17,15 @@ const AppToolbar = () => {
   const user = useAppSelector(selectUser);
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" sx={{background: '#154fad'}}>
       <Toolbar>
         <Grid container justifyContent="space-between" alignItems="center">
           <Typography variant="h6" component="div">
             <Link to="/">
-              Game
+              Quize game
             </Link>
           </Typography>
-          <Grid item container justifyContent="space-between" alignItems="center" lg={11}>
+          <Grid item container justifyContent="space-between" alignItems="center" lg={10}>
             {user && (<UserMenu user={user}/>)}
           </Grid>
         </Grid>
