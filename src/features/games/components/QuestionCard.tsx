@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Button, Dialog, DialogContent, DialogTitle, Grid, IconButton, TextField, Typography} from "@mui/material";
 import {Clue} from "../../../types";
 import {useAppDispatch} from "../../../app/hooks";
@@ -30,6 +30,22 @@ const QuestionCard: React.FC<Props> =
     const [question, setQuestion] = useState({
       answer: '',
     });
+    const [timerForModal, setTimerForModal] = useState(false);
+    const [modalSeconds, setModalSeconds] = useState(1);
+
+    useEffect(() => {
+      let intervalId: NodeJS.Timeout;
+      if (modalSeconds > 0 && timerForModal) {
+        intervalId = setTimeout(() => {
+          setModalSeconds(modalSeconds - 1);
+        }, 500);
+      } else if (modalSeconds === 0 && timerForModal) {
+        handleClose();
+      }
+      return () => {
+        clearTimeout(intervalId);
+      };
+    }, [modalSeconds, timerForModal, handleClose]);
 
     const submitFormHandler = async (e: React.FormEvent) => {
       e.preventDefault();
@@ -44,6 +60,7 @@ const QuestionCard: React.FC<Props> =
       setQuestion(prev => ({
         ...prev, answer: '',
       }));
+      setTimerForModal(true);
     };
 
     const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,45 +87,45 @@ const QuestionCard: React.FC<Props> =
                 color: (theme) => theme.palette.grey[500],
               }}
             >
-              <CloseIcon />
+              <CloseIcon/>
             </IconButton>
           </DialogTitle>
           <DialogContent sx={{padding: '10px', height: '350px'}}>
             <Box sx={{height: '100px', paddingTop: '20px'}}>
-            {isCorrect &&
-                <Typography
-                    variant="h5"
-                    textAlign="center"
-                    fontWeight={700}
-                    textTransform="uppercase"
-                    sx={{color: "green"}}
-                >
-                    Correct!
-                </Typography>
-            }
-            {isCorrect === false &&
-                <Typography
-                    variant="h5"
-                    textAlign="center"
-                    fontWeight={700}
-                    textTransform="uppercase"
-                    sx={{color: "red"}}
-                >
-                    Not Correct :(
-                </Typography>
-            }
-            {!clue.isAnswered &&
-                <>
-                    <Typography variant="body1" textAlign="center" mb={3}>{clue.question}</Typography>
-                    <Typography
-                        variant="subtitle1"
-                        textAlign="center"
-                        sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
-                    >
-                        <TimerOutlinedIcon sx={{mr: 1}}/><span>{seconds}</span>
-                    </Typography>
-                </>
-            }
+              {isCorrect &&
+                  <Typography
+                      variant="h5"
+                      textAlign="center"
+                      fontWeight={700}
+                      textTransform="uppercase"
+                      sx={{color: "green"}}
+                  >
+                      Correct!
+                  </Typography>
+              }
+              {isCorrect === false &&
+                  <Typography
+                      variant="h5"
+                      textAlign="center"
+                      fontWeight={700}
+                      textTransform="uppercase"
+                      sx={{color: "red"}}
+                  >
+                      Not Correct :(
+                  </Typography>
+              }
+              {!clue.isAnswered &&
+                  <>
+                      <Typography variant="body1" textAlign="center" mb={3}>{clue.question}</Typography>
+                      <Typography
+                          variant="subtitle1"
+                          textAlign="center"
+                          sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+                      >
+                          <TimerOutlinedIcon sx={{mr: 1}}/><span>{seconds}</span>
+                      </Typography>
+                  </>
+              }
             </Box>
             <form
               autoComplete="off"
@@ -145,7 +162,13 @@ const QuestionCard: React.FC<Props> =
                   </Button>
                 </Grid>
                 <Grid item xs>
-                  <Typography textAlign="center" fontSize="12px" variant="subtitle1">Hint:{clue.answer}</Typography>
+                  <Typography
+                    textAlign="center"
+                    fontSize="12px"
+                    variant="subtitle1"
+                  >
+                    Hint: {clue.answer}
+                  </Typography>
                 </Grid>
               </Grid>
             </form>

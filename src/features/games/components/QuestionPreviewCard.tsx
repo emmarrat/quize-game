@@ -12,10 +12,10 @@ interface Props {
 const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
   const dispatch = useAppDispatch();
   const gameStatus = useAppSelector(selectGameStatus);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | string>('');
-  const [seconds, setSeconds] = React.useState(60);
-  const [timerActive, setTimerActive] = React.useState(false);
+  const [seconds, setSeconds] = useState(60);
+  const [timerActive, setTimerActive] = useState(false);
 
   useEffect(() => {
       let intervalId: NodeJS.Timeout;
@@ -36,6 +36,7 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
       };
     },
     [clue.id, dispatch, seconds, timerActive, clue.value]);
+
 
   const handleClose = () => {
     setOpen(false);
