@@ -3,8 +3,8 @@ import {Container, CssBaseline, Typography} from "@mui/material";
 import {Route, Routes} from "react-router-dom";
 import WelcomeForm from "./components/UI/WelcomeForm/WelcomeForm";
 import Game from "./features/games/Game";
-import GamesStat from "./features/games/GamesStat";
 import AppToolbar from "./components/UI/AppToolbar/AppToolbar";
+import GameStats from "./features/games/components/GameStats";
 
 function App() {
 
@@ -19,7 +19,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<WelcomeForm/>}/>
             <Route path="/" element={<Game/>}/>
-            <Route path="/stats" element={<GamesStat/>}/>
+            <Route path="/stats" element={<GameStats/>}/>
             <Route
               path="*"
               element={

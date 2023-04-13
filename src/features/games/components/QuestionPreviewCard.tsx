@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Grid, Typography} from "@mui/material";
 import {Clue} from "../../../types";
 import QuestionCard from "./QuestionCard";
-import {useAppDispatch} from "../../../app/hooks";
-import {markAnswered} from "../gamesSlice";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
+import {markAnswered, selectGameStatus} from "../gamesSlice";
 
 interface Props {
   clue: Clue;
@@ -11,7 +11,7 @@ interface Props {
 
 const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
   const dispatch = useAppDispatch();
-
+  const gameStatus = useAppSelector(selectGameStatus);
   const [open, setOpen] = React.useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | string>('');
   const [seconds, setSeconds] = React.useState(60);
@@ -70,10 +70,10 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
         border="0.5px solid black"
         sx={{
           cursor: 'pointer',
-          width: '120px',
-          maxWidth: '120px',
-          height: '120px',
-          backgroundColor: clue.isAnswered ? '#e8ebe8' : '#06b115'
+          width: '100px',
+          maxWidth: '100px',
+          height: '100px',
+          backgroundColor: (clue.isAnswered || !gameStatus) ? '#e8ebe8' : '#06b115'
         }}
         onClick={handleClickOpen}
       >
@@ -83,7 +83,7 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
           color="#fff"
           fontWeight={600}
         >
-          {clue.isAnswered ? '' : clue.value}
+          {(clue.isAnswered || !gameStatus) ? '' : clue.value}
         </Typography>
       </Grid>
       <QuestionCard
