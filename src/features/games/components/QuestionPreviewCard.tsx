@@ -3,7 +3,7 @@ import {Grid, Typography} from "@mui/material";
 import {Clue} from "../../../types";
 import QuestionCard from "./QuestionCard";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
-import {markAnswered, selectGameStatus} from "../gamesSlice";
+import {decrementScore, markAnswered, selectGameStatus} from "../gamesSlice";
 
 interface Props {
   clue: Clue;
@@ -14,7 +14,7 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
   const gameStatus = useAppSelector(selectGameStatus);
   const [open, setOpen] = React.useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | string>('');
-  const [seconds, setSeconds] = React.useState(60);
+  const [seconds, setSeconds] = React.useState(10);
   const [timerActive, setTimerActive] = React.useState(false);
 
   useEffect(() => {
@@ -26,6 +26,7 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
         }, 1000);
       } else if (seconds === 0 && timerActive) {
         dispatch(markAnswered(clue.id));
+        dispatch(decrementScore(clue.value));
         setIsCorrect(false);
         setTimerActive(false);
       }
@@ -34,7 +35,7 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
         clearTimeout(intervalId);
       };
     },
-    [clue.id, dispatch, seconds, timerActive]);
+    [clue.id, dispatch, seconds, timerActive, clue.value]);
 
   const handleClose = () => {
     setOpen(false);
@@ -57,7 +58,6 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
     setIsCorrect(false);
     setTimerActive(false);
   };
-
 
   return (
     <>
