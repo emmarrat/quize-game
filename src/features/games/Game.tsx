@@ -47,13 +47,14 @@ const Game = () => {
 
   return (
     <>
-      {gameOver &&
-          <Grid container justifyContent="center" alignItems="center" my={3}>
-              <Typography fontWeight={700} variant="h4" color="error">
-                  Game Over!
-              </Typography>
-          </Grid>}
-      <Grid container>
+    {gameOver &&
+        <Grid container justifyContent="center" alignItems="center" my={3}>
+            <Typography fontWeight={700} variant="h4" color="error">
+                Game Over!
+            </Typography>
+        </Grid>}
+    <Grid container justifyContent="center">
+      <Grid item container sx={{width: '600px', boxShadow: '0px 1px 9px 9px #A7A7A7'}}>
         {clues.map((clueRow, index) => (
           <Grid
             item container
@@ -85,22 +86,24 @@ const Game = () => {
             ))}
           </Grid>
         ))}
-        <Grid item container justifyContent="center" mt={5}>
-          <Button
-            variant="contained"
-            onClick={gameStatus ? finishTheGame : startTheGame}
-            style={{background: !gameStatus ? 'green' : 'red'}}
-          >
-            {!gameStatus ? 'Start game' : 'End game'}
-          </Button>
-        </Grid>
-        <Grid item container justifyContent="center" mt={5}>
-          <Typography fontWeight={700}>
-            Game status: <span
-            style={{color: !gameStatus ? 'red' : 'green'}}>{gameStatus ? 'Playing' : 'Not started'}</span>
-          </Typography>
-        </Grid>
-      </Grid></>
+      </Grid>
+      <Grid item container justifyContent="center" mt={5}>
+        <Button
+          variant="contained"
+          onClick={gameStatus ? finishTheGame : startTheGame}
+          style={{background: !gameStatus ? 'green' : 'red'}}
+        >
+          {!gameStatus ? 'Start game' : 'End game'}
+        </Button>
+      </Grid>
+      <Grid item container justifyContent="center" mt={5}>
+        <Typography fontWeight={700}>
+          Game status: <span
+          style={{color: !gameStatus ? 'red' : 'green'}}>{gameStatus ? 'Playing' : 'Not started'}</span>
+        </Typography>
+      </Grid>
+    </Grid>
+    </>
   );
 };
 
