@@ -8,11 +8,10 @@ import {gamesReducer} from "../features/games/gamesSlice";
 const persistConfig = {
   key: 'game:users',
   storage,
-  whitelist: ['user', 'clues', 'previousUsers'],
+  whitelist: ['user', 'clues', 'previousUsers', 'isGameStarted'],
 }
 
 const rootReducer = combineReducers({
-  // users: persistReducer(persistConfig,usersReducer),
   games: persistReducer(persistConfig, gamesReducer),
 });
 

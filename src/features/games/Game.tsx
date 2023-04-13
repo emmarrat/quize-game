@@ -47,7 +47,7 @@ const Game = () => {
             container
             justifyContent="center"
             alignItems="center"
-            border="0.5px solid black"
+            border="0.5px solid white"
             sx={{width: '100px', maxWidth: '100px', height: '100px', background: '#1976d2'}}
           >
             <Typography
@@ -55,7 +55,7 @@ const Game = () => {
               align="center"
               textTransform="capitalize"
               color="#fff"
-              fontWeight={600}
+              fontWeight={500}
             >
               {clueRow.title}
             </Typography>

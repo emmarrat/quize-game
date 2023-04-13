@@ -67,7 +67,7 @@ const QuestionPreviewCard: React.FC<Props> = ({clue}) => {
         justifyContent="center"
         alignItems="center"
         key={clue.id}
-        border="0.5px solid black"
+        border="0.5px solid white"
         sx={{
           cursor: 'pointer',
           width: '100px',
