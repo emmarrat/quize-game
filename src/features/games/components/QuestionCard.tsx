@@ -50,7 +50,7 @@ const QuestionCard: React.FC<Props> =
     const submitFormHandler = async (e: React.FormEvent) => {
       e.preventDefault();
       await dispatch(markAnswered(clue.id));
-      if (clue.answer.toLowerCase() === question.answer.toLowerCase()) {
+      if (clue.answer.replace(/<[^>]+>/g, '').toLowerCase() === question.answer.toLowerCase()) {
         await dispatch(incrementScore(clue.value));
         trueAnswer();
       } else {
@@ -167,7 +167,7 @@ const QuestionCard: React.FC<Props> =
                     fontSize="12px"
                     variant="subtitle1"
                   >
-                    Hint: {clue.answer}
+                    Hint: {clue.answer.replace(/<[^>]+>/g, '')}
                   </Typography>
                 </Grid>
               </Grid>
