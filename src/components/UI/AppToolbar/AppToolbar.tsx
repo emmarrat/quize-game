@@ -3,7 +3,6 @@ import {AppBar, Grid, styled, Toolbar, Typography} from '@mui/material';
 import {Link as NavLink} from 'react-router-dom';
 import {useAppSelector} from "../../../app/hooks";
 import UserMenu from "./UserMenu";
-import AnonymousMenu from "./AnonymousMenu";
 import {selectUser} from "../../../features/games/gamesSlice";
 
 const Link = styled(NavLink)({
@@ -26,8 +25,8 @@ const AppToolbar = () => {
               Game
             </Link>
           </Typography>
-          <Grid item>
-            {user ? (<UserMenu user={user}/>) : (<AnonymousMenu/>)}
+          <Grid item container justifyContent="space-between" alignItems="center" lg={11}>
+            {user && (<UserMenu user={user}/>)}
           </Grid>
         </Grid>
       </Toolbar>

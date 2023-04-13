@@ -8,7 +8,7 @@ interface GamesState {
   fetchLoading: boolean;
   user: User | null;
   previousUsers: User[];
-  isGameStarted:  boolean;
+  isGameStarted: boolean;
 }
 
 const initialState: GamesState = {
@@ -32,7 +32,7 @@ export const gamesSlice = createSlice({
         state.isGameStarted = true;
       },
       logout: (state) => {
-        if(state.user) {
+        if (state.user) {
           state.user.scores.push(state.user.currentScore);
           state.user.currentScore = 0;
           state.previousUsers.push(state.user);
@@ -43,38 +43,39 @@ export const gamesSlice = createSlice({
       markAnswered: (state, action: PayloadAction<number>) => {
         state.clues.forEach((clue) => {
           clue.clues.forEach((c) => {
-            if(c.id === action.payload) {
+            if (c.id === action.payload) {
               c.isAnswered = true;
             }
           })
         });
       },
       incrementScore: (state, action: PayloadAction<number>) => {
-        if(state.user) {
+        if (state.user) {
           state.user.currentScore += action.payload;
         }
       },
       decrementScore: (state, action: PayloadAction<number>) => {
-        if(state.user) {
+        if (state.user) {
           state.user.currentScore -= action.payload;
         }
       },
       endGame: (state) => {
-       if(state.user) {
-         state.isGameStarted = false;
-         state.user.scores.push(state.user.currentScore);
-         state.user.currentScore = 0;
-         state.clues.forEach((clue) => {
-           clue.clues.forEach((c) => {
-               c.isAnswered = false;
-           })
-         });
-       }
+        if (state.user) {
+          state.isGameStarted = false;
+          state.user.scores.push(state.user.currentScore);
+          state.clues.forEach((clue) => {
+            clue.clues.forEach((c) => {
+              c.isAnswered = false;
+            })
+          });
+        }
       },
-      startGame:(state) => {
-        state.isGameStarted = true;
-      }
-
+      startGame: (state) => {
+        if (state.user) {
+          state.user.currentScore = 0;
+          state.isGameStarted = true;
+        }
+      },
     },
     extraReducers: builder => {
 

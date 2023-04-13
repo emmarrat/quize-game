@@ -68,7 +68,6 @@ const GameStats = () => {
             </>}
           </Box>
       </>}
-
       <Typography variant="h5" mt={5} mb={1}>All Previous stats:</Typography>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
